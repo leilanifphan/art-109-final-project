@@ -1,0 +1,59 @@
+/* Base palette */
+html,body{height:100%;}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:#fff7e9;color:#2b2b2b;display:flex;flex-direction:column;align-items:center;}
+
+/* Header */
+.top{width:100%;text-align:center;padding:32px 12px 12px;display:flex;flex-direction:column;align-items:center;gap:12px;}
+.top h1{margin:0;font-size:clamp(1.8rem,4vw,3rem);font-weight:600;}
+.mode-buttons{display:flex;gap:16px;}
+.mode{border:none;border-radius:999px;padding:10px 20px;font-size:1rem;cursor:pointer;box-shadow:0 3px 8px rgba(0,0,0,.15);background:#e8dfff;color:#3d2d55;transition:.3s;}
+.mode.future-btn{background:#ffe8ad;color:#7a5a00;}
+.mode[aria-pressed="true"]{outline:3px solid rgba(0,0,0,.35);}
+.mode:hover{transform:translateY(-2px);}
+
+/* Canvas area */
+.canvas{flex:1;width:100%;max-width:900px;display:flex;flex-direction:column;align-items:center;gap:24px;padding:12px 24px 48px;position:relative;}
+
+/* Stack: envelope behind postcard */
+.stack{position:relative;width:700px;max-width:100%;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;}
+.envelope{position:absolute;inset:0;margin:auto;object-fit:contain;z-index:1;filter:drop-shadow(0 12px 25px rgba(0,0,0,.25));opacity:.85;}
+
+.postcard-wrapper{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2;}
+.postcard{position:absolute;max-width:70%;height:auto;transition:opacity .4s;}
+.postcard.past{opacity:1;}
+.postcard.future{opacity:0;pointer-events:none;}
+.canvas[data-mode="future"] .postcard.past{opacity:0;}
+.canvas[data-mode="future"] .postcard.future{opacity:1;pointer-events:auto;}
+
+/* Message overlay (right half) */
+.message{position:absolute;right:10%;top:20%;width:32%;height:55%;background:rgba(255,255,255,.5);backdrop-filter:blur(3px);border:2px solid rgba(0,0,0,.15);border-radius:12px;padding:10px;font-size:1rem;resize:none;outline:none;font-family:inherit;}
+.message::placeholder{color:#555;}
+.canvas[data-mode="future"] .message{background:rgba(255,255,255,.55);}
+
+/* Send button */
+.send-btn{border:none;background:#a8d8ff;color:#10374d;padding:14px 26px;font-size:1.05rem;border-radius:16px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.18);transition:.3s;}
+.send-btn:hover{transform:translateY(-3px);}
+.send-btn:active{transform:translateY(0);}
+
+/* Animation: upward then down (into envelope) */
+.anim-send{animation:postcard-send 2.2s cubic-bezier(.65,.05,.36,1) forwards;}
+@keyframes postcard-send{
+	0%{transform:translateY(0) scale(1);}
+	35%{transform:translateY(-160px) scale(1);}
+	60%{transform:translateY(40px) scale(.85);} /* coming down toward envelope */
+	82%{transform:translateY(20px) scale(.65);opacity:.9;}
+	100%{transform:translateY(10px) scale(.5);opacity:0;} /* disappears inside */
+}
+.anim-send .message{opacity:0;transition:opacity .4s;}
+
+/* Responsive adjustments */
+@media (max-width:800px){
+	.stack{width:100%;}
+	.postcard{max-width:90%;}
+	.message{right:6%;width:40%;}
+}
+@media (max-width:560px){
+	.message{position:static;width:85%;height:150px;margin-top:12px;}
+	.postcard-wrapper{flex-direction:column;}
+	.postcard{position:relative;max-width:95%;}
+}

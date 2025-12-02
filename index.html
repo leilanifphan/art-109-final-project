@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+		<title>The Future and the Present</title>
+		<link rel="stylesheet" href="css/style.css" />
+	</head>
+	<body>
+		<header class="top">
+			<h1>The Future and the Present</h1>
+			<div class="mode-buttons">
+				<button class="mode past-btn" data-mode="past" aria-pressed="true">🌙 Past</button>
+				<button class="mode future-btn" data-mode="future" aria-pressed="false">☀️ Future</button>
+			</div>
+		</header>
+		<main class="canvas" data-mode="past">
+			<div class="stack">
+				<img src="imgs/envelope.png" alt="Envelope" class="envelope" />
+				<div class="postcard-wrapper">
+					<img src="imgs/postcard-past.png" alt="Past Postcard" class="postcard past" />
+					<img src="imgs/postcard-future.png" alt="Future Postcard" class="postcard future" />
+					<textarea id="message" class="message" placeholder="Write to your past self..."></textarea>
+				</div>
+			</div>
+			<button id="sendBtn" class="send-btn">Send Letter ✉️</button>
+		</main>
+		<script src="js/app.js"></script>
+	</body>
+</html>
